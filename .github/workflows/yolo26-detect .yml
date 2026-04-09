@@ -34,10 +34,11 @@ jobs:
         cd yolo
         mkdir -pv onnx
         cd onnx
-        wget https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26n.pt -O yolo.pt
+        # wget https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo26n.pt -O yolo.pt
+        cp ../../weights/yolo26n.pt ./yolo.pt
         python ../export_det_v26.pyc -w yolo.pt --sim
-        yolo export model=yolo26n.pt format=onnx opset=19
-        mv yolo26n.onnx yolo26n_original.onnx 
+        # yolo export model=yolo26n.pt format=onnx opset=19
+        # mv yolo26n.onnx yolo26n_original.onnx 
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
@@ -75,7 +76,7 @@ jobs:
         mkdir -pv rknn
         cp -vr ${SRC_PATH}/onnx_artifacts/*.onnx ./rknn/
         python convert.pyc rknn/yolo.onnx rk3588 i8 rknn/yolo.rknn
-        python convert.pyc rknn/yolo26n_original.onnx rk3588 i8 rknn/yolo26n_original.rknn
+        # python convert.pyc rknn/yolo26n_original.onnx rk3588 i8 rknn/yolo26n_original.rknn
 
 
     - name: Upload artifact
